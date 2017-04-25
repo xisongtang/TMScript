@@ -19,11 +19,13 @@
         if (!isDecoration) continue;
         var parent = li.querySelector('div.actions');
         var host = window.location.host;
-        var url;
+        var url, dUrl;
         if (host.startsWith("beta") || host.startsWith("yun")) {
             url = "/customized?obsdesignid=" + designId;
+            dUrl = "/decoration?obsdesignid=" + designId;
         } else {
             url = "/cloud/customized?obsdesignid=" + designId;
+            dUrl = "/cloud/decoration?obsdesignid=" + designId;
         }
         var a = document.createElement("a");
         a.href = url;
@@ -31,5 +33,12 @@
         a.target = "_blank";
         a.append("全屋定制");
         parent.appendChild(a);
+
+        a = document.createElement("a");
+        a.href = dUrl;
+        a.classList = "trans fl br3 mr3";
+        a.target = "_blank";
+        a.append("硬装工具");
+        parent.appendChild(a);
     }
-})(); 
+})();
