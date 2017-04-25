@@ -4,9 +4,7 @@
 // @version      0.1
 // @description  add customizer entry in my design
 // @author       xishuai
-// @match        http://cabinet.qunhequnhe.com/cloud/mydesign
-// @match        http*://alpha.kujiale.com/cloud/mydesign
-// @match        http*://*.kujiale.com/mydesign
+// @match        */mydesign
 // @grant        none
 // ==/UserScript==
 
