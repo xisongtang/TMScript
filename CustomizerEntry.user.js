@@ -4,8 +4,8 @@
 // @version      0.1
 // @description  add customizer entry in my design
 // @author       xishuai
-// @match        */mydesign
-// @match        */*/mydesign
+// @match        */mydesign*
+// @match        */*/mydesign*
 // @grant        none
 // ==/UserScript==
 
