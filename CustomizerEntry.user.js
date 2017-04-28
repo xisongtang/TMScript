@@ -5,6 +5,7 @@
 // @description  add customizer entry in my design
 // @author       xishuai
 // @match        */mydesign
+// @match        */*/mydesign
 // @grant        none
 // ==/UserScript==
 
