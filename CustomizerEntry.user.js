@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         customizer entry
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  add customizer entry in my design
 // @author       xishuai
 // @match        */mydesign*
@@ -9,35 +9,32 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
-    'use strict';
-    var ul = document.querySelector('ul.deco-list');
-    for (var i = 0; i < ul.children.length; i++) {
-        var li = ul.children[i];
-        var planId = li.dataset.planid, designId = li.dataset.dsid, isDecoration = li.dataset.isdeco === "true";
-        if (!isDecoration) continue;
-        var parent = li.querySelector('div.actions');
-        var host = window.location.host;
-        var url, dUrl;
-        if (host.startsWith("beta") || host.startsWith("yun")) {
-            url = "/customized?obsdesignid=" + designId;
-            dUrl = "/decoration?obsdesignid=" + designId;
-        } else {
-            url = "/cloud/customized?obsdesignid=" + designId;
-            dUrl = "/cloud/decoration?obsdesignid=" + designId;
+setTimeout(
+    function () {
+        'use strict';
+        var btns = document.querySelectorAll('.list-btn');
+        const reg = /.*designid\/(.*)\?.*/;
+        console.log(btns.length);
+        for (var i = 0; i < btns.length; i++) {
+            var btn = btns[i];
+            var href = btn.querySelector("a").href;
+            var regres = reg.exec(href);
+            if (!regres) continue;
+            var designId = regres[1];
+            var huxing = btn.querySelector('.modify-huxing');
+            var host = window.location.host;
+            var url;
+            if (host.startsWith("beta") || host.startsWith("yun")) {
+                url = "/customized?obsdesignid=";
+            } else {
+                url = "/cloud/customized?obsdesignid=";
+            }
+            url += designId + "&redirecturl=" + encodeURIComponent(href);
+            var node = huxing.cloneNode(true);
+            node.style.zIndex = 10;
+            var a = node.childNodes[0];
+            a.innerHTML = "全屋定制";
+            a.href = url;
+            btn.appendChild(node);
         }
-        var a = document.createElement("a");
-        a.href = url;
-        a.classList = "ktask-ds fl br3";
-        a.target = "_blank";
-        a.append("全屋定制");
-        parent.appendChild(a);
-
-        a = document.createElement("a");
-        a.href = dUrl;
-        a.classList = "trans fl br3 mr3";
-        a.target = "_blank";
-        a.append("硬装工具");
-        parent.appendChild(a);
-    }
-})();
+    }, 1000);
