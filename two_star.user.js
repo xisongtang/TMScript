@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TwoStar
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.0.1
 // @description  hotfix分支需要两个star才能merge
 // @author       xishuai
 // @match        gitlab.qunhequnhe.com/tool-frontend/custom/*/merge_requests/*
@@ -30,22 +30,22 @@
                 disable = true;
             }
         }
-        if (disable) {
-            mergeButton.disabled = true;
-            mergeButton.title = "点赞数不够"
-            console.log(111);
-        } else {
-            mergeButton.disabled = false;
-            mergeButton.title = null;
-            console.log(222);
+
+        const currentDisabled = mergeButton.disabled;
+        if (currentDisabled !== disable) {
+            if (disable) {
+                mergeButton.disabled = true;
+                mergeButton.title = "点赞数不够"
+            } else {
+                mergeButton.disabled = false;
+                mergeButton.title = null;
+            }
         }
     }
-    const starNum = getCurrentStarNum();
-    console.log(starNum);
-    check(starNum);
-    const awardButton = document.getElementsByClassName("award-control")[0];
-    awardButton.onclick = function(e) {
-        let hasStar = awardButton.className.indexOf("active") > 0;
-        check(starNum + (hasStar ? -1: 1));
+    function progress() {
+        const starNum = getCurrentStarNum();
+        check(starNum);
+        requestAnimationFrame(progress);
     }
+    requestAnimationFrame(progress)
 })();
