@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         TwoStar
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
+// @version      1.0.2
 // @description  hotfix分支需要两个star才能merge
 // @author       xishuai
-// @match        gitlab.qunhequnhe.com/tool-frontend/custom/*/merge_requests/*
+// @match        gitlab.qunhequnhe.com/*/*/*/merge_requests/*
 // @grant        none
 // ==/UserScript==
 
@@ -25,13 +25,14 @@
             if (starNum < 2) {
                 disable = true;
             }
-        } else if (branchPrefix === "develop" || branchPrefix == "release") {
+        } else if (branchPrefix === "develop" || branchPrefix == "release" || branchPrefix == "dw") {
             if (starNum < 1) {
                 disable = true;
             }
         }
 
         const currentDisabled = mergeButton.disabled;
+        console.log(currentDisabled, disable, starNum);
         if (currentDisabled !== disable) {
             if (disable) {
                 mergeButton.disabled = true;
