@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         customizer entry
 // @namespace    http://tampermonkey.net/
-// @version      0.21
+// @version      0.22
 // @description  add customizer entry in my design
 // @author       xishuai
 // @match        */mydesign*
@@ -10,12 +10,15 @@
 // @grant        none
 // ==/UserScript==
 
-setTimeout(
+const key = setInterval(
     function () {
         'use strict';
         var btns = document.querySelectorAll('.list-btn');
         const reg = /.*designid\/(.*)\?.*/;
         console.log(btns.length);
+        if (btns.length > 0) {
+            clearInterval(key);
+        }
         for (var i = 0; i < btns.length; i++) {
             var btn = btns[i];
             var href = btn.querySelector("a").href;
@@ -49,4 +52,4 @@ setTimeout(
             a.href = dUrl;
             btn.appendChild(node);
         }
-    }, 1000);
+    }, 100);
